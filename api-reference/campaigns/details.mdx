@@ -1,0 +1,232 @@
+---
+title: 'Campaign Details'
+api: 'GET /campaigns/{campaignId}'
+description: 'Retrieve detailed information about a specific campaign'
+---
+
+## Get Campaign Details
+
+Retrieve detailed information about a specific video campaign.
+
+<ParamField path="campaignId" type="string" required>
+  The unique identifier of the campaign
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the request was successful
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  Campaign details
+</ResponseField>
+
+<ResponseField name="data.id" type="string">
+  Unique identifier for the campaign
+</ResponseField>
+
+<ResponseField name="data.name" type="string">
+  Name of the campaign
+</ResponseField>
+
+<ResponseField name="data.description" type="string">
+  Description of the campaign
+</ResponseField>
+
+<ResponseField name="data.status" type="string">
+  Status of the campaign: `active`, `draft`, or `archived`
+</ResponseField>
+
+<ResponseField name="data.created_at" type="string">
+  ISO timestamp of when the campaign was created
+</ResponseField>
+
+<ResponseField name="data.updated_at" type="string">
+  ISO timestamp of when the campaign was last updated
+</ResponseField>
+
+<ResponseField name="data.views" type="integer">
+  Total number of views for the campaign
+</ResponseField>
+
+<ResponseField name="data.unique_viewers" type="integer">
+  Number of unique viewers for the campaign
+</ResponseField>
+
+<ResponseField name="data.average_watch_time" type="number">
+  Average watch time in seconds
+</ResponseField>
+
+<ResponseField name="data.completion_rate" type="number">
+  Percentage of viewers who watched the entire video
+</ResponseField>
+
+<ResponseField name="data.thumbnail_url" type="string">
+  URL to the campaign thumbnail image
+</ResponseField>
+
+<ResponseField name="data.video_url" type="string">
+  URL to the campaign video
+</ResponseField>
+
+<ResponseField name="data.settings" type="object">
+  Campaign settings
+</ResponseField>
+
+<ResponseField name="data.settings.personalization" type="object">
+  Personalization settings
+</ResponseField>
+
+<ResponseField name="data.settings.personalization.enabled" type="boolean">
+  Whether personalization is enabled
+</ResponseField>
+
+<ResponseField name="data.settings.personalization.variables" type="array">
+  Array of personalization variables
+</ResponseField>
+
+<ResponseField name="data.settings.sharing" type="object">
+  Sharing settings
+</ResponseField>
+
+<ResponseField name="data.settings.sharing.enabled" type="boolean">
+  Whether sharing is enabled
+</ResponseField>
+
+<ResponseField name="data.settings.sharing.platforms" type="array">
+  Array of enabled sharing platforms
+</ResponseField>
+
+<ResponseField name="data.settings.tracking" type="object">
+  Tracking settings
+</ResponseField>
+
+<ResponseField name="data.settings.tracking.enabled" type="boolean">
+  Whether tracking is enabled
+</ResponseField>
+
+<ResponseField name="data.settings.tracking.events" type="array">
+  Array of tracked events
+</ResponseField>
+
+## Example Request
+
+```bash
+curl -X GET "https://api.example.com/v1/campaigns/camp_1a2b3c4d5e6f" \
+  -H "x-api-key: YOUR_API_KEY"
+```
+
+```javascript
+const axios = require('axios');
+
+const apiKey = process.env.API_KEY;
+const campaignId = 'camp_1a2b3c4d5e6f';
+
+async function getCampaignDetails() {
+  try {
+    const response = await axios.get(`https://api.example.com/v1/campaigns/${campaignId}`, {
+      headers: {
+        'x-api-key': apiKey
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching campaign details:', error);
+  }
+}
+```
+
+```python
+import requests
+import os
+
+api_key = os.environ.get('API_KEY')
+campaign_id = 'camp_1a2b3c4d5e6f'
+
+def get_campaign_details():
+    headers = {
+        'x-api-key': api_key
+    }
+    response = requests.get(f'https://api.example.com/v1/campaigns/{campaign_id}', 
+                           headers=headers)
+    response.raise_for_status()
+    return response.json()
+```
+
+## Example Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "camp_1a2b3c4d5e6f",
+    "name": "Summer Promotion 2025",
+    "description": "Personalized video campaign for our summer promotion",
+    "status": "active",
+    "created_at": "2025-03-15T14:30:00Z",
+    "updated_at": "2025-04-01T09:15:22Z",
+    "views": 1250,
+    "unique_viewers": 1050,
+    "average_watch_time": 45.7,
+    "completion_rate": 0.78,
+    "thumbnail_url": "https://assets.example.com/thumbnails/camp_1a2b3c4d5e6f.jpg",
+    "video_url": "https://assets.example.com/videos/camp_1a2b3c4d5e6f.mp4",
+    "settings": {
+      "personalization": {
+        "enabled": true,
+        "variables": ["name", "company", "product"]
+      },
+      "sharing": {
+        "enabled": true,
+        "platforms": ["email", "twitter", "linkedin", "facebook"]
+      },
+      "tracking": {
+        "enabled": true,
+        "events": ["play", "pause", "complete", "share", "click"]
+      }
+    }
+  }
+}
+```
+
+## Error Responses
+
+<ResponseField name="success" type="boolean">
+  Always `false` for error responses
+</ResponseField>
+
+<ResponseField name="error" type="object">
+  Error details
+</ResponseField>
+
+<ResponseField name="error.code" type="string">
+  Error code
+</ResponseField>
+
+<ResponseField name="error.message" type="string">
+  Human-readable error message
+</ResponseField>
+
+### 404 Not Found
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "not_found",
+    "message": "Campaign not found"
+  }
+}
+```
+
+### 401 Unauthorized
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "unauthorized",
+    "message": "Invalid or missing API key"
+  }
+}

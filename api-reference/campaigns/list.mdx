@@ -1,0 +1,213 @@
+---
+title: 'List Campaigns'
+api: 'GET /campaigns'
+description: 'Retrieve a list of all your video campaigns'
+---
+
+## List All Campaigns
+
+Retrieve a paginated list of all your video campaigns, sorted by creation date.
+
+<ParamField query="page" type="integer" default="1">
+  Page number for pagination
+</ParamField>
+
+<ParamField query="limit" type="integer" default="20" max="100">
+  Number of campaigns to return per page
+</ParamField>
+
+<ParamField query="status" type="string">
+  Filter campaigns by status: `active`, `draft`, `archived`
+</ParamField>
+
+<ParamField query="sort" type="string" default="-created_at">
+  Sort campaigns by a specific field. Prefix with `-` for descending order. 
+  Options: `created_at`, `updated_at`, `name`, `views`
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the request was successful
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  Array of campaign objects
+</ResponseField>
+
+<ResponseField name="data[].id" type="string">
+  Unique identifier for the campaign
+</ResponseField>
+
+<ResponseField name="data[].name" type="string">
+  Name of the campaign
+</ResponseField>
+
+<ResponseField name="data[].status" type="string">
+  Status of the campaign: `active`, `draft`, or `archived`
+</ResponseField>
+
+<ResponseField name="data[].created_at" type="string">
+  ISO timestamp of when the campaign was created
+</ResponseField>
+
+<ResponseField name="data[].updated_at" type="string">
+  ISO timestamp of when the campaign was last updated
+</ResponseField>
+
+<ResponseField name="data[].views" type="integer">
+  Total number of views for the campaign
+</ResponseField>
+
+<ResponseField name="data[].thumbnail_url" type="string">
+  URL to the campaign thumbnail image
+</ResponseField>
+
+<ResponseField name="pagination" type="object">
+  Pagination information
+</ResponseField>
+
+<ResponseField name="pagination.total" type="integer">
+  Total number of campaigns
+</ResponseField>
+
+<ResponseField name="pagination.pages" type="integer">
+  Total number of pages
+</ResponseField>
+
+<ResponseField name="pagination.page" type="integer">
+  Current page number
+</ResponseField>
+
+<ResponseField name="pagination.limit" type="integer">
+  Number of campaigns per page
+</ResponseField>
+
+## Example Request
+
+```bash
+curl -X GET "https://api.example.com/v1/campaigns?page=1&limit=10&status=active" \
+  -H "x-api-key: YOUR_API_KEY"
+```
+
+```javascript
+const axios = require('axios');
+
+const apiKey = process.env.API_KEY;
+
+async function listCampaigns() {
+  try {
+    const response = await axios.get('https://api.example.com/v1/campaigns', {
+      params: {
+        page: 1,
+        limit: 10,
+        status: 'active'
+      },
+      headers: {
+        'x-api-key': apiKey
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error listing campaigns:', error);
+  }
+}
+```
+
+```python
+import requests
+import os
+
+api_key = os.environ.get('API_KEY')
+
+def list_campaigns():
+    headers = {
+        'x-api-key': api_key
+    }
+    params = {
+        'page': 1,
+        'limit': 10,
+        'status': 'active'
+    }
+    response = requests.get('https://api.example.com/v1/campaigns', 
+                           headers=headers, 
+                           params=params)
+    response.raise_for_status()
+    return response.json()
+```
+
+## Example Response
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "camp_1a2b3c4d5e6f",
+      "name": "Summer Promotion 2025",
+      "status": "active",
+      "created_at": "2025-03-15T14:30:00Z",
+      "updated_at": "2025-04-01T09:15:22Z",
+      "views": 1250,
+      "thumbnail_url": "https://assets.example.com/thumbnails/camp_1a2b3c4d5e6f.jpg"
+    },
+    {
+      "id": "camp_2b3c4d5e6f7g",
+      "name": "Product Launch Video",
+      "status": "active",
+      "created_at": "2025-03-10T11:45:00Z",
+      "updated_at": "2025-03-25T16:20:10Z",
+      "views": 3427,
+      "thumbnail_url": "https://assets.example.com/thumbnails/camp_2b3c4d5e6f7g.jpg"
+    }
+    // Additional campaigns...
+  ],
+  "pagination": {
+    "total": 42,
+    "pages": 5,
+    "page": 1,
+    "limit": 10
+  }
+}
+```
+
+## Error Responses
+
+<ResponseField name="success" type="boolean">
+  Always `false` for error responses
+</ResponseField>
+
+<ResponseField name="error" type="object">
+  Error details
+</ResponseField>
+
+<ResponseField name="error.code" type="string">
+  Error code
+</ResponseField>
+
+<ResponseField name="error.message" type="string">
+  Human-readable error message
+</ResponseField>
+
+### 401 Unauthorized
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "unauthorized",
+    "message": "Invalid or missing API key"
+  }
+}
+```
+
+### 400 Bad Request
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "invalid_request",
+    "message": "Invalid parameter: limit must be between 1 and 100"
+  }
+}

@@ -1,0 +1,380 @@
+---
+title: 'Generate Realtime Video'
+api: 'POST /campaigns/{campaignId}/realtime'
+description: 'Generate a realtime personalized video for a specific campaign'
+---
+
+## Generate Realtime Video
+
+Generate a realtime personalized video for a specific campaign that can be dynamically updated during playback.
+
+<ParamField path="campaignId" type="string" required>
+  The unique identifier of the campaign
+</ParamField>
+
+## Request Body
+
+<ParamField body="session_id" type="string">
+  Optional custom session identifier. If not provided, a random session ID will be generated.
+</ParamField>
+
+<ParamField body="initial_data" type="object" required>
+  Initial data to personalize the video
+</ParamField>
+
+<ParamField body="initial_data.recipient" type="object" required>
+  Information about the video recipient
+</ParamField>
+
+<ParamField body="initial_data.recipient.email" type="string" required>
+  Email address of the recipient
+</ParamField>
+
+<ParamField body="initial_data.recipient.name" type="string">
+  Name of the recipient
+</ParamField>
+
+<ParamField body="initial_data.recipient.company" type="string">
+  Company of the recipient
+</ParamField>
+
+<ParamField body="initial_data.variables" type="object">
+  Custom variables to personalize the video. The available variables depend on the campaign template.
+</ParamField>
+
+<ParamField body="callback_url" type="string">
+  URL to receive a webhook notification when the realtime session is ready
+</ParamField>
+
+<ParamField body="settings" type="object">
+  Additional settings for the video generation
+</ParamField>
+
+<ParamField body="settings.quality" type="string" default="high">
+  Video quality: `low`, `medium`, `high`, or `ultra`
+</ParamField>
+
+<ParamField body="settings.format" type="string" default="mp4">
+  Video format: `mp4`, `webm`, or `mov`
+</ParamField>
+
+<ParamField body="settings.resolution" type="string" default="1080p">
+  Video resolution: `720p`, `1080p`, or `4k`
+</ParamField>
+
+<ParamField body="settings.session_timeout" type="integer" default="3600">
+  Session timeout in seconds (max 7200)
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the request was successful
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  Realtime session information
+</ResponseField>
+
+<ResponseField name="data.session_id" type="string">
+  Unique identifier for the realtime session
+</ResponseField>
+
+<ResponseField name="data.status" type="string">
+  Status of the session: `initializing`, `ready`, `active`, `ended`, or `failed`
+</ResponseField>
+
+<ResponseField name="data.campaign_id" type="string">
+  ID of the campaign used for the realtime video
+</ResponseField>
+
+<ResponseField name="data.created_at" type="string">
+  ISO timestamp of when the session was created
+</ResponseField>
+
+<ResponseField name="data.expires_at" type="string">
+  ISO timestamp of when the session will expire
+</ResponseField>
+
+<ResponseField name="data.player_url" type="string">
+  URL to the realtime player that can be embedded in an iframe
+</ResponseField>
+
+<ResponseField name="data.api_endpoint" type="string">
+  API endpoint to update the session data in realtime
+</ResponseField>
+
+<ResponseField name="data.tracking_id" type="string">
+  Unique tracking ID for analytics
+</ResponseField>
+
+## Example Request
+
+```bash
+curl -X POST "https://api.example.com/v1/campaigns/camp_1a2b3c4d5e6f/realtime" \
+  -H "x-api-key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "session_id": "custom_session_123",
+    "initial_data": {
+      "recipient": {
+        "email": "john.doe@example.com",
+        "name": "John Doe",
+        "company": "Acme Inc."
+      },
+      "variables": {
+        "product_name": "Premium Plan",
+        "discount": "20%",
+        "expiry_date": "April 30, 2025"
+      }
+    },
+    "callback_url": "https://your-app.com/webhooks/realtime-ready",
+    "settings": {
+      "quality": "high",
+      "format": "mp4",
+      "resolution": "1080p",
+      "session_timeout": 3600
+    }
+  }'
+```
+
+```javascript
+const axios = require('axios');
+
+const apiKey = process.env.API_KEY;
+const campaignId = 'camp_1a2b3c4d5e6f';
+
+async function generateRealtimeVideo() {
+  try {
+    const response = await axios.post(
+      `https://api.example.com/v1/campaigns/${campaignId}/realtime`,
+      {
+        session_id: 'custom_session_123',
+        initial_data: {
+          recipient: {
+            email: 'john.doe@example.com',
+            name: 'John Doe',
+            company: 'Acme Inc.'
+          },
+          variables: {
+            product_name: 'Premium Plan',
+            discount: '20%',
+            expiry_date: 'April 30, 2025'
+          }
+        },
+        callback_url: 'https://your-app.com/webhooks/realtime-ready',
+        settings: {
+          quality: 'high',
+          format: 'mp4',
+          resolution: '1080p',
+          session_timeout: 3600
+        }
+      },
+      {
+        headers: {
+          'x-api-key': apiKey,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error generating realtime video:', error);
+  }
+}
+```
+
+```python
+import requests
+import os
+import json
+
+api_key = os.environ.get('API_KEY')
+campaign_id = 'camp_1a2b3c4d5e6f'
+
+def generate_realtime_video():
+    headers = {
+        'x-api-key': api_key,
+        'Content-Type': 'application/json'
+    }
+    
+    payload = {
+        'session_id': 'custom_session_123',
+        'initial_data': {
+            'recipient': {
+                'email': 'john.doe@example.com',
+                'name': 'John Doe',
+                'company': 'Acme Inc.'
+            },
+            'variables': {
+                'product_name': 'Premium Plan',
+                'discount': '20%',
+                'expiry_date': 'April 30, 2025'
+            }
+        },
+        'callback_url': 'https://your-app.com/webhooks/realtime-ready',
+        'settings': {
+            'quality': 'high',
+            'format': 'mp4',
+            'resolution': '1080p',
+            'session_timeout': 3600
+        }
+    }
+    
+    response = requests.post(
+        f'https://api.example.com/v1/campaigns/{campaign_id}/realtime',
+        headers=headers,
+        data=json.dumps(payload)
+    )
+    response.raise_for_status()
+    return response.json()
+```
+
+## Example Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "session_id": "custom_session_123",
+    "status": "initializing",
+    "campaign_id": "camp_1a2b3c4d5e6f",
+    "created_at": "2025-04-10T16:45:00Z",
+    "expires_at": "2025-04-10T17:45:00Z",
+    "player_url": "https://player.example.com/realtime/custom_session_123",
+    "api_endpoint": "https://api.example.com/v1/realtime/sessions/custom_session_123",
+    "tracking_id": "trk_3e4f5g6h7i8j"
+  }
+}
+```
+
+## Webhook Notification
+
+When the realtime session is ready, a webhook notification will be sent to the `callback_url` if provided:
+
+```json
+{
+  "event": "realtime.ready",
+  "session": {
+    "session_id": "custom_session_123",
+    "status": "ready",
+    "campaign_id": "camp_1a2b3c4d5e6f",
+    "created_at": "2025-04-10T16:45:00Z",
+    "expires_at": "2025-04-10T17:45:00Z",
+    "player_url": "https://player.example.com/realtime/custom_session_123",
+    "api_endpoint": "https://api.example.com/v1/realtime/sessions/custom_session_123",
+    "tracking_id": "trk_3e4f5g6h7i8j"
+  }
+}
+```
+
+## Updating Realtime Session Data
+
+Once the session is ready, you can update the session data in realtime using the provided `api_endpoint`:
+
+```bash
+curl -X PATCH "https://api.example.com/v1/realtime/sessions/custom_session_123" \
+  -H "x-api-key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "variables": {
+      "product_name": "Enterprise Plan",
+      "discount": "25%"
+    }
+  }'
+```
+
+```javascript
+const axios = require('axios');
+
+const apiKey = process.env.API_KEY;
+const sessionId = 'custom_session_123';
+
+async function updateRealtimeSession() {
+  try {
+    const response = await axios.patch(
+      `https://api.example.com/v1/realtime/sessions/${sessionId}`,
+      {
+        variables: {
+          product_name: 'Enterprise Plan',
+          discount: '25%'
+        }
+      },
+      {
+        headers: {
+          'x-api-key': apiKey,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error updating realtime session:', error);
+  }
+}
+```
+
+## Error Responses
+
+<ResponseField name="success" type="boolean">
+  Always `false` for error responses
+</ResponseField>
+
+<ResponseField name="error" type="object">
+  Error details
+</ResponseField>
+
+<ResponseField name="error.code" type="string">
+  Error code
+</ResponseField>
+
+<ResponseField name="error.message" type="string">
+  Human-readable error message
+</ResponseField>
+
+### 404 Not Found
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "not_found",
+    "message": "Campaign not found"
+  }
+}
+```
+
+### 400 Bad Request
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "invalid_request",
+    "message": "Missing required field: initial_data.recipient.email"
+  }
+}
+```
+
+### 402 Payment Required
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "insufficient_credits",
+    "message": "Your account does not have enough credits for realtime video"
+  }
+}
+```
+
+### 409 Conflict
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "session_exists",
+    "message": "A session with this ID already exists"
+  }
+}

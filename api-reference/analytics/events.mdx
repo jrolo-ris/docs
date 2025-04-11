@@ -1,0 +1,309 @@
+---
+title: 'Analytics Events'
+api: 'GET /analytics/events'
+description: 'Retrieve analytics events data for your campaigns'
+---
+
+## Get Analytics Events
+
+Retrieve analytics events data for your campaigns, including views, engagement metrics, and more.
+
+## Query Parameters
+
+<ParamField query="campaign_id" type="string">
+  Filter events by campaign ID
+</ParamField>
+
+<ParamField query="video_id" type="string">
+  Filter events by video ID
+</ParamField>
+
+<ParamField query="event_type" type="string">
+  Filter by event type: `view`, `play`, `pause`, `complete`, `share`, `click`
+</ParamField>
+
+<ParamField query="start_date" type="string">
+  Start date for the date range filter (ISO format: YYYY-MM-DD)
+</ParamField>
+
+<ParamField query="end_date" type="string">
+  End date for the date range filter (ISO format: YYYY-MM-DD)
+</ParamField>
+
+<ParamField query="page" type="integer" default="1">
+  Page number for pagination
+</ParamField>
+
+<ParamField query="limit" type="integer" default="20" max="100">
+  Number of events to return per page
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the request was successful
+</ResponseField>
+
+<ResponseField name="data" type="array">
+  Array of event objects
+</ResponseField>
+
+<ResponseField name="data[].id" type="string">
+  Unique identifier for the event
+</ResponseField>
+
+<ResponseField name="data[].event_type" type="string">
+  Type of event: `view`, `play`, `pause`, `complete`, `share`, `click`
+</ResponseField>
+
+<ResponseField name="data[].campaign_id" type="string">
+  ID of the campaign associated with the event
+</ResponseField>
+
+<ResponseField name="data[].video_id" type="string">
+  ID of the video associated with the event
+</ResponseField>
+
+<ResponseField name="data[].viewer" type="object">
+  Information about the viewer
+</ResponseField>
+
+<ResponseField name="data[].viewer.email" type="string">
+  Email address of the viewer (if available)
+</ResponseField>
+
+<ResponseField name="data[].viewer.ip" type="string">
+  IP address of the viewer (anonymized)
+</ResponseField>
+
+<ResponseField name="data[].viewer.user_agent" type="string">
+  User agent of the viewer
+</ResponseField>
+
+<ResponseField name="data[].viewer.location" type="object">
+  Location information of the viewer
+</ResponseField>
+
+<ResponseField name="data[].timestamp" type="string">
+  ISO timestamp of when the event occurred
+</ResponseField>
+
+<ResponseField name="data[].metadata" type="object">
+  Additional metadata specific to the event type
+</ResponseField>
+
+<ResponseField name="pagination" type="object">
+  Pagination information
+</ResponseField>
+
+<ResponseField name="pagination.total" type="integer">
+  Total number of events
+</ResponseField>
+
+<ResponseField name="pagination.pages" type="integer">
+  Total number of pages
+</ResponseField>
+
+<ResponseField name="pagination.page" type="integer">
+  Current page number
+</ResponseField>
+
+<ResponseField name="pagination.limit" type="integer">
+  Number of events per page
+</ResponseField>
+
+## Example Request
+
+```bash
+curl -X GET "https://api.example.com/v1/analytics/events?campaign_id=camp_1a2b3c4d5e6f&event_type=view&start_date=2025-04-01&end_date=2025-04-10" \
+  -H "x-api-key: YOUR_API_KEY"
+```
+
+```javascript
+const axios = require('axios');
+
+const apiKey = process.env.API_KEY;
+
+async function getAnalyticsEvents() {
+  try {
+    const response = await axios.get('https://api.example.com/v1/analytics/events', {
+      params: {
+        campaign_id: 'camp_1a2b3c4d5e6f',
+        event_type: 'view',
+        start_date: '2025-04-01',
+        end_date: '2025-04-10'
+      },
+      headers: {
+        'x-api-key': apiKey
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching analytics events:', error);
+  }
+}
+```
+
+```python
+import requests
+import os
+
+api_key = os.environ.get('API_KEY')
+
+def get_analytics_events():
+    headers = {
+        'x-api-key': api_key
+    }
+    params = {
+        'campaign_id': 'camp_1a2b3c4d5e6f',
+        'event_type': 'view',
+        'start_date': '2025-04-01',
+        'end_date': '2025-04-10'
+    }
+    response = requests.get('https://api.example.com/v1/analytics/events', 
+                           headers=headers, 
+                           params=params)
+    response.raise_for_status()
+    return response.json()
+```
+
+## Example Response
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "evt_1a2b3c4d5e6f",
+      "event_type": "view",
+      "campaign_id": "camp_1a2b3c4d5e6f",
+      "video_id": "vid_7g8h9i0j1k2l",
+      "viewer": {
+        "email": "john.doe@example.com",
+        "ip": "192.0.2.xxx",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "location": {
+          "country": "United States",
+          "city": "San Francisco",
+          "region": "California"
+        }
+      },
+      "timestamp": "2025-04-05T14:30:00Z",
+      "metadata": {
+        "duration": 45,
+        "percentage_watched": 100,
+        "referrer": "https://example.com/campaign"
+      }
+    },
+    {
+      "id": "evt_2b3c4d5e6f7g",
+      "event_type": "view",
+      "campaign_id": "camp_1a2b3c4d5e6f",
+      "video_id": "vid_8h9i0j1k2l3m",
+      "viewer": {
+        "email": "jane.smith@example.com",
+        "ip": "198.51.100.xxx",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "location": {
+          "country": "United Kingdom",
+          "city": "London",
+          "region": "England"
+        }
+      },
+      "timestamp": "2025-04-06T09:15:00Z",
+      "metadata": {
+        "duration": 32,
+        "percentage_watched": 75,
+        "referrer": "https://example.com/email"
+      }
+    }
+    // Additional events...
+  ],
+  "pagination": {
+    "total": 156,
+    "pages": 8,
+    "page": 1,
+    "limit": 20
+  }
+}
+```
+
+## Aggregated Analytics
+
+For aggregated analytics data, you can use the `/analytics/events/aggregate` endpoint:
+
+```bash
+curl -X GET "https://api.example.com/v1/analytics/events/aggregate?campaign_id=camp_1a2b3c4d5e6f&group_by=day" \
+  -H "x-api-key: YOUR_API_KEY"
+```
+
+This endpoint supports the following parameters:
+
+<ParamField query="campaign_id" type="string">
+  Filter events by campaign ID
+</ParamField>
+
+<ParamField query="video_id" type="string">
+  Filter events by video ID
+</ParamField>
+
+<ParamField query="event_type" type="string">
+  Filter by event type: `view`, `play`, `pause`, `complete`, `share`, `click`
+</ParamField>
+
+<ParamField query="start_date" type="string">
+  Start date for the date range filter (ISO format: YYYY-MM-DD)
+</ParamField>
+
+<ParamField query="end_date" type="string">
+  End date for the date range filter (ISO format: YYYY-MM-DD)
+</ParamField>
+
+<ParamField query="group_by" type="string" default="day">
+  Group results by: `hour`, `day`, `week`, `month`
+</ParamField>
+
+<ParamField query="metrics" type="string">
+  Comma-separated list of metrics to include: `count`, `unique_viewers`, `average_watch_time`, `completion_rate`
+</ParamField>
+
+## Error Responses
+
+<ResponseField name="success" type="boolean">
+  Always `false` for error responses
+</ResponseField>
+
+<ResponseField name="error" type="object">
+  Error details
+</ResponseField>
+
+<ResponseField name="error.code" type="string">
+  Error code
+</ResponseField>
+
+<ResponseField name="error.message" type="string">
+  Human-readable error message
+</ResponseField>
+
+### 401 Unauthorized
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "unauthorized",
+    "message": "Invalid or missing API key"
+  }
+}
+```
+
+### 400 Bad Request
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "invalid_request",
+    "message": "Invalid date format for start_date"
+  }
+}

@@ -1,13 +1,25 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Video API Documentation",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
     "dark": "#15803D"
   },
   "favicon": "/favicon.svg",
+  "api": {
+    "mdx": {
+      "server": "https://api.example.com/v1",
+      "auth": {
+        "method": "key",
+        "name": "x-api-key"
+      }
+    },
+    "playground": {
+      "mode": "simple"
+    }
+  },
   "navigation": {
     "tabs": [
       {
@@ -16,20 +28,32 @@
           {
             "group": "Get Started",
             "pages": [
-              "introduction",
-              "quickstart",
-              "development"
+              "introduction"
             ]
           },
           {
-            "group": "Essentials",
+            "group": "Tailor Player",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "tailor-player/setup",
+              "tailor-player/realtime-workflow"
+            ]
+          },
+          {
+            "group": "Realtime SDK",
+            "pages": [
+              "realtime-sdk/index"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "integrations/zapier",
+              "integrations/hubspot",
+              "integrations/calendly",
+              "integrations/salesforce",
+              "integrations/zoho",
+              "integrations/attio",
+              "integrations/pipedrive"
             ]
           }
         ]
@@ -38,18 +62,32 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Getting Started",
             "pages": [
-              "api-reference/introduction"
+              "api-reference/introduction",
+              "api-reference/getting-api-key"
             ]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Campaigns",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/campaigns/list",
+              "api-reference/campaigns/details",
+              "api-reference/campaigns/generate-video",
+              "api-reference/campaigns/generate-realtime"
+            ]
+          },
+          {
+            "group": "Analytics",
+            "pages": [
+              "api-reference/analytics/events",
+              "api-reference/analytics/viewers"
+            ]
+          },
+          {
+            "group": "Company",
+            "pages": [
+              "api-reference/company/credits"
             ]
           }
         ]
@@ -76,8 +114,8 @@
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/TailorDocs_LightMode.svg",
+    "dark": "/logo/TailorDocs_DarkMode.svg"
   },
   "navbar": {
     "links": [
@@ -94,7 +132,6 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
       "github": "https://github.com/mintlify",
       "linkedin": "https://linkedin.com/company/mintlify"
     }

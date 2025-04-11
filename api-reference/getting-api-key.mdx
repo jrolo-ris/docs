@@ -1,0 +1,90 @@
+---
+title: 'Getting an API Key'
+description: 'Learn how to obtain and manage your API keys'
+---
+
+# Getting an API Key
+
+To use the Video API, you'll need an API key. This key authenticates your requests and identifies your account.
+
+## Obtaining Your API Key
+
+1. Log in to your account at [dashboard.example.com](https://dashboard.example.com)
+2. Navigate to **Settings** > **API Keys**
+3. Click **Generate New API Key**
+4. Give your key a descriptive name (e.g., "Development", "Production")
+5. Click **Create**
+
+<Warning>
+  Your API key will only be displayed once. Make sure to copy it and store it securely.
+</Warning>
+
+## API Key Security
+
+Your API key grants access to your account and resources. Follow these best practices to keep it secure:
+
+- Never expose your API key in client-side code (like JavaScript running in a browser)
+- Don't commit your API key to version control systems
+- Use environment variables to store your API key in your applications
+- Implement proper access controls for who can use your API key
+- Rotate your API keys periodically
+
+## Using Your API Key
+
+Include your API key in the `x-api-key` header with all API requests:
+
+```bash
+curl -X GET "https://api.example.com/v1/campaigns" \
+  -H "x-api-key: YOUR_API_KEY"
+```
+
+### Node.js Example
+
+```javascript
+const axios = require('axios');
+
+const apiKey = process.env.API_KEY; // Store your API key in an environment variable
+
+async function fetchCampaigns() {
+  try {
+    const response = await axios.get('https://api.example.com/v1/campaigns', {
+      headers: {
+        'x-api-key': apiKey
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching campaigns:', error);
+  }
+}
+```
+
+### Python Example
+
+```python
+import requests
+import os
+
+api_key = os.environ.get('API_KEY')  # Store your API key in an environment variable
+
+def fetch_campaigns():
+    headers = {
+        'x-api-key': api_key
+    }
+    response = requests.get('https://api.example.com/v1/campaigns', headers=headers)
+    response.raise_for_status()  # Raise an exception for 4XX/5XX responses
+    return response.json()
+```
+
+## Managing API Keys
+
+You can manage your API keys from the dashboard:
+
+- **View** your active API keys
+- **Create** new API keys
+- **Revoke** existing API keys if they're compromised
+- **Monitor** API key usage and activity
+
+<Note>
+  We recommend creating separate API keys for different environments (development, staging, production) and different applications.
+</Note>

@@ -1,0 +1,255 @@
+---
+title: 'Company Credits'
+api: 'GET /companies/{companyId}/credits'
+description: 'Retrieve information about your company credits'
+---
+
+## Get Company Credits
+
+Retrieve information about your company's available credits, usage history, and billing details.
+
+<ParamField path="companyId" type="string" required>
+  The unique identifier of your company
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the request was successful
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  Company credits information
+</ResponseField>
+
+<ResponseField name="data.company_id" type="string">
+  Unique identifier for your company
+</ResponseField>
+
+<ResponseField name="data.available_credits" type="integer">
+  Number of available credits
+</ResponseField>
+
+<ResponseField name="data.used_credits" type="integer">
+  Number of credits used in the current billing cycle
+</ResponseField>
+
+<ResponseField name="data.total_credits" type="integer">
+  Total number of credits allocated to your company
+</ResponseField>
+
+<ResponseField name="data.billing_cycle" type="object">
+  Information about the current billing cycle
+</ResponseField>
+
+<ResponseField name="data.billing_cycle.start_date" type="string">
+  ISO timestamp of when the current billing cycle started
+</ResponseField>
+
+<ResponseField name="data.billing_cycle.end_date" type="string">
+  ISO timestamp of when the current billing cycle ends
+</ResponseField>
+
+<ResponseField name="data.billing_cycle.reset_date" type="string">
+  ISO timestamp of when the credits will reset (if applicable)
+</ResponseField>
+
+<ResponseField name="data.plan" type="object">
+  Information about your company's plan
+</ResponseField>
+
+<ResponseField name="data.plan.name" type="string">
+  Name of the plan
+</ResponseField>
+
+<ResponseField name="data.plan.credits_per_cycle" type="integer">
+  Number of credits allocated per billing cycle
+</ResponseField>
+
+<ResponseField name="data.plan.features" type="array">
+  Array of features included in the plan
+</ResponseField>
+
+<ResponseField name="data.usage_history" type="array">
+  Array of credit usage history entries
+</ResponseField>
+
+<ResponseField name="data.usage_history[].date" type="string">
+  ISO timestamp of the usage date
+</ResponseField>
+
+<ResponseField name="data.usage_history[].credits_used" type="integer">
+  Number of credits used on this date
+</ResponseField>
+
+<ResponseField name="data.usage_history[].description" type="string">
+  Description of the credit usage
+</ResponseField>
+
+## Example Request
+
+```bash
+curl -X GET "https://api.example.com/v1/companies/comp_1a2b3c4d5e6f/credits" \
+  -H "x-api-key: YOUR_API_KEY"
+```
+
+```javascript
+const axios = require('axios');
+
+const apiKey = process.env.API_KEY;
+const companyId = 'comp_1a2b3c4d5e6f';
+
+async function getCompanyCredits() {
+  try {
+    const response = await axios.get(`https://api.example.com/v1/companies/${companyId}/credits`, {
+      headers: {
+        'x-api-key': apiKey
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching company credits:', error);
+  }
+}
+```
+
+```python
+import requests
+import os
+
+api_key = os.environ.get('API_KEY')
+company_id = 'comp_1a2b3c4d5e6f'
+
+def get_company_credits():
+    headers = {
+        'x-api-key': api_key
+    }
+    response = requests.get(f'https://api.example.com/v1/companies/{company_id}/credits', 
+                           headers=headers)
+    response.raise_for_status()
+    return response.json()
+```
+
+## Example Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "company_id": "comp_1a2b3c4d5e6f",
+    "available_credits": 750,
+    "used_credits": 250,
+    "total_credits": 1000,
+    "billing_cycle": {
+      "start_date": "2025-04-01T00:00:00Z",
+      "end_date": "2025-04-30T23:59:59Z",
+      "reset_date": "2025-05-01T00:00:00Z"
+    },
+    "plan": {
+      "name": "Business Pro",
+      "credits_per_cycle": 1000,
+      "features": [
+        "Standard Video Generation",
+        "Realtime Video Generation",
+        "Advanced Analytics",
+        "API Access",
+        "Priority Support"
+      ]
+    },
+    "usage_history": [
+      {
+        "date": "2025-04-10T00:00:00Z",
+        "credits_used": 50,
+        "description": "Generated 5 standard videos"
+      },
+      {
+        "date": "2025-04-09T00:00:00Z",
+        "credits_used": 100,
+        "description": "Generated 2 realtime videos"
+      },
+      {
+        "date": "2025-04-05T00:00:00Z",
+        "credits_used": 100,
+        "description": "Generated 10 standard videos"
+      }
+    ]
+  }
+}
+```
+
+## Purchase Additional Credits
+
+To purchase additional credits, you can use the following endpoint:
+
+```bash
+curl -X POST "https://api.example.com/v1/companies/comp_1a2b3c4d5e6f/credits/purchase" \
+  -H "x-api-key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "amount": 500,
+    "payment_method_id": "pm_1a2b3c4d5e6f"
+  }'
+```
+
+This endpoint requires the following parameters:
+
+<ParamField body="amount" type="integer" required>
+  Number of credits to purchase
+</ParamField>
+
+<ParamField body="payment_method_id" type="string" required>
+  ID of the payment method to use
+</ParamField>
+
+## Error Responses
+
+<ResponseField name="success" type="boolean">
+  Always `false` for error responses
+</ResponseField>
+
+<ResponseField name="error" type="object">
+  Error details
+</ResponseField>
+
+<ResponseField name="error.code" type="string">
+  Error code
+</ResponseField>
+
+<ResponseField name="error.message" type="string">
+  Human-readable error message
+</ResponseField>
+
+### 404 Not Found
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "not_found",
+    "message": "Company not found"
+  }
+}
+```
+
+### 401 Unauthorized
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "unauthorized",
+    "message": "Invalid or missing API key"
+  }
+}
+```
+
+### 403 Forbidden
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "forbidden",
+    "message": "You do not have permission to access this company's credits"
+  }
+}

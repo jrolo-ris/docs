@@ -1,33 +1,76 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'API Introduction'
+description: 'Overview of the Video API and how to get started'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+# Video API Introduction
 
-## Welcome
+Welcome to the Video API documentation. This API allows you to programmatically create personalized videos, manage campaigns, track analytics, and more.
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+## Base URL
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+All API requests should be made to the following base URL:
+
+```
+https://api.example.com/v1
+```
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+The Video API uses API keys for authentication. All API requests must include your API key in the `x-api-key` header.
+
+```bash
+curl -X GET "https://api.example.com/v1/campaigns" \
+  -H "x-api-key: YOUR_API_KEY"
+```
+
+<Note>
+  Keep your API key secure and never share it publicly. If you believe your API key has been compromised, you should regenerate it immediately from your dashboard.
+</Note>
+
+## Rate Limiting
+
+The API implements rate limiting to ensure fair usage and system stability. The current limits are:
+
+- 100 requests per minute per API key
+- 5,000 requests per day per API key
+
+If you exceed these limits, you'll receive a `429 Too Many Requests` response.
+
+## Response Format
+
+All API responses are returned in JSON format. Successful responses will have a 2xx status code and contain the requested data. Error responses will have a 4xx or 5xx status code and include an error message.
+
+### Success Response Example
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
+{
+  "success": true,
+  "data": {
+    // Response data here
   }
-]
+}
 ```
+
+### Error Response Example
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "invalid_request",
+    "message": "The request was invalid",
+    "details": "Missing required parameter: campaignId"
+  }
+}
+```
+
+## API Endpoints
+
+The API is organized around the following resources:
+
+- **Campaigns**: Create and manage video campaigns
+- **Analytics**: Track video views and viewer information
+- **Company**: Manage company settings and credits
+
+Explore the documentation to learn more about each endpoint and how to use them.
