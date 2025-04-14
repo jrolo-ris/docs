@@ -7,7 +7,7 @@
     "light": "#07C983",
     "dark": "#15803D"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.ico",
   "api": {
     "mdx": {
       "server": "https://api.tailor.video/api/v1",
@@ -80,12 +80,12 @@
           {
             "group": "Analytics",
             "pages": [
-              "api-reference/analytics/events",
+              "api-reference/analytics/summary",
               "api-reference/analytics/viewers"
             ]
           },
           {
-            "group": "Company",
+            "group": "Credits",
             "pages": [
               "api-reference/company/credits"
             ]
@@ -96,19 +96,14 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "Support",
+          "href": "https://tailor.video/support",
+          "icon": "headset"
         },
         {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Pricing",
+          "href": "https://tailor.video/pricing",
+          "icon": "dollar-sign"
         }
       ]
     }

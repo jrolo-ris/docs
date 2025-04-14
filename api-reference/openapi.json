@@ -31,7 +31,8 @@
             "schema": {
               "type": "string"
             },
-            "description": "The unique ID of the campaign to generate a video for."
+            "description": "The unique ID of the campaign to generate a video for.",
+            "example": "camp_1a2b3c4d5e"
           }
         ],
         "requestBody": {
@@ -49,18 +50,22 @@
                     "description": "Key-value pairs of template fields and their values.",
                     "additionalProperties": {
                       "description": "The value to assign to the field."
+                    },
+                    "example": {
+                      "customerName": "Acme Corp",
+                      "discountOffer": "15%"
                     }
                   },
                   "thumbnail": {
                     "type": "number",
                     "description": "The time (in seconds) for the video thumbnail. Defaults to 1.5 if not provided.",
-                    "example": 1.5
+                    "example": 2.5
                   },
                   "callback_url": {
                     "type": "string",
                     "format": "uri",
                     "description": "The URL to receive a callback when the video is rendered.",
-                    "example": "https://example.com/callback"
+                    "example": "https://webhook.site/mock-callback-id"
                   }
                 }
               },
@@ -69,11 +74,11 @@
                   "summary": "Basic Example",
                   "value": {
                     "fields": {
-                      "firstName": "John",
-                      "lastName": "Doe"
+                      "firstName": "Jane",
+                      "lastName": "Smith"
                     },
                     "thumbnail": 2.0,
-                    "callback_url": "https://example.com/callback"
+                    "callback_url": "https://webhook.site/mock-callback-id-basic"
                   }
                 }
               }
@@ -91,17 +96,17 @@
                     "video_id": {
                       "type": "string",
                       "description": "The unique ID of the generated video.",
-                      "example": "a1b2c3d4-e5f6-7890-1234-567890abcdef"
+                      "example": "vid_f6e5d4c3b2a1"
                     },
                     "video_url": {
                       "type": "string",
                       "description": "The URL where the generated video will be available.",
-                      "example": "https://video.tailor.video/12345/OUTPUTS/a1b2c3d4-e5f6-7890-1234-567890abcdef.mp4"
+                      "example": "https://mock.video.tailor.video/outputs/vid_f6e5d4c3b2a1.mp4"
                     },
                     "estimated_credits": {
                       "type": "number",
                       "description": "The estimated credits required for rendering this video.",
-                      "example": 0.2
+                      "example": 0.25
                     }
                   }
                 },
@@ -109,9 +114,9 @@
                   "Success": {
                     "summary": "Successful Response",
                     "value": {
-                      "video_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
-                      "video_url": "https://video.tailor.video/12345/OUTPUTS/a1b2c3d4-e5f6-7890-1234-567890abcdef.mp4",
-                      "estimated_credits": 0.2
+                      "video_id": "vid_9z8y7x6w5v4u",
+                      "video_url": "https://mock.video.tailor.video/outputs/vid_9z8y7x6w5v4u.mp4",
+                      "estimated_credits": 0.3
                     }
                   }
                 }
@@ -126,19 +131,21 @@
                   "type": "object",
                   "properties": {
                     "message": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "Required field 'fields' is missing."
                     },
                     "request_id": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "req_abcdef123456"
                     }
                   }
                 },
                 "examples": {
                   "MissingFields": {
-                    "summary": "Missing fields array",
+                    "summary": "Missing fields object",
                     "value": {
-                      "message": "Invalid request body. Must include fields (array) and callback_url (string).",
-                      "request_id": "123e4567-e89b-12d3-a456-426614174000"
+                      "message": "Invalid request body. Must include 'fields' (object).",
+                      "request_id": "req_fedcba654321"
                     }
                   }
                 }
@@ -153,7 +160,8 @@
                   "type": "object",
                   "properties": {
                     "message": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "Campaign with ID 'camp_invalid123' not found."
                     }
                   }
                 },
@@ -176,7 +184,8 @@
                   "type": "object",
                   "properties": {
                     "message": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "An unexpected error occurred on the server."
                     }
                   }
                 },
@@ -214,7 +223,8 @@
             "schema": {
               "type": "string"
             },
-            "description": "The unique ID of the campaign to generate a video for."
+            "description": "The unique ID of the campaign to generate a video for.",
+            "example": "camp_realtime_abc"
           }
         ],
         "requestBody": {
@@ -232,18 +242,22 @@
                     "description": "Key-value pairs of template fields and their values.",
                     "additionalProperties": {
                       "description": "The value to assign to the field."
+                    },
+                    "example": {
+                      "userName": "DemoUser",
+                      "productName": "Widget Pro"
                     }
                   },
                   "thumbnail": {
                     "type": "number",
                     "description": "The time (in seconds) for the video thumbnail. Defaults to 1.5 if not provided.",
-                    "example": 1.5
+                    "example": 1.0
                   },
                   "callback_url": {
                     "type": "string",
                     "format": "uri",
                     "description": "The URL to receive a callback when the stream is available.",
-                    "example": "https://example.com/callback"
+                    "example": "https://webhook.site/mock-realtime-callback"
                   }
                 }
               },
@@ -252,11 +266,11 @@
                   "summary": "Basic Example",
                   "value": {
                     "fields": {
-                      "firstName": "John",
-                      "lastName": "Doe"
+                      "firstName": "Alex",
+                      "companyName": "Innovate Inc."
                     },
-                    "thumbnail": 2.0,
-                    "callback_url": "https://example.com/callback"
+                    "thumbnail": 1.5,
+                    "callback_url": "https://webhook.site/mock-realtime-basic"
                   }
                 }
               }
@@ -273,18 +287,18 @@
                   "properties": {
                     "stream_id": {
                       "type": "string",
-                      "description": "The unique ID of the generated video.",
-                      "example": "a1b2c3d4-e5f6-7890-1234-567890abcdef"
+                      "description": "The unique ID of the generated video stream.",
+                      "example": "stream_7g8h9i0jkl"
                     },
                     "stream_url": {
                       "type": "string",
-                      "description": "The URL where the generated video will be available.",
-                      "example": "https://video.tailor.video/12345/OUTPUTS/a1b2c3d4-e5f6-7890-1234-567890abcdef/video.m3u8"
+                      "description": "The URL where the generated video stream will be available.",
+                      "example": "https://mock.video.tailor.video/streams/stream_7g8h9i0jkl/video.m3u8"
                     },
                     "estimated_credits": {
                       "type": "number",
                       "description": "The estimated credits required for rendering this video.",
-                      "example": 2.0
+                      "example": 2.5
                     }
                   }
                 },
@@ -292,8 +306,8 @@
                   "Success": {
                     "summary": "Successful Response",
                     "value": {
-                      "stream_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
-                      "stream_url": "https://video.tailor.video/12345/OUTPUTS/a1b2c3d4-e5f6-7890-1234-567890abcdef.m3u8",
+                      "stream_id": "stream_1mn2o3p4qr",
+                      "stream_url": "https://mock.video.tailor.video/streams/stream_1mn2o3p4qr/video.m3u8",
                       "estimated_credits": 2.0
                     }
                   }
@@ -309,19 +323,21 @@
                   "type": "object",
                   "properties": {
                     "message": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "Callback URL is not a valid URI."
                     },
                     "request_id": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "req_realtime_bad"
                     }
                   }
                 },
                 "examples": {
                   "MissingFields": {
-                    "summary": "Missing fields array",
+                    "summary": "Missing fields object",
                     "value": {
-                      "message": "Invalid request body. Must include fields (array) and callback_url (string).",
-                      "request_id": "123e4567-e89b-12d3-a456-426614174000"
+                      "message": "Invalid request body. Must include 'fields' (object).",
+                      "request_id": "req_realtime_missing"
                     }
                   }
                 }
@@ -336,7 +352,8 @@
                   "type": "object",
                   "properties": {
                     "message": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "Campaign with ID 'camp_nonexistent' not found."
                     }
                   }
                 },
@@ -359,7 +376,8 @@
                   "type": "object",
                   "properties": {
                     "message": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "Realtime generation service unavailable."
                     }
                   }
                 },
@@ -368,6 +386,480 @@
                     "summary": "Internal error",
                     "value": {
                       "message": "An error occurred while processing your request"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analytics/viewers/{campaignId}": {
+      "get": {
+        "summary": "Get campaign viewers and deliverables",
+        "operationId": "getCampaignViewers",
+        "tags": [
+          "Analytics"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "campaignId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique ID of the campaign to get viewers for.",
+            "example": "camp_analytics_xyz"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination.",
+            "example": 1
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 100
+            },
+            "description": "Number of items per page.",
+            "example": 50
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search query to filter results.",
+            "example": "jane.doe@example.com"
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["CreatedAt", "viewerName"],
+              "default": "CreatedAt"
+            },
+            "description": "Field to sort by.",
+            "example": "viewerName"
+          },
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["ASC", "DESC"],
+              "default": "DESC"
+            },
+            "description": "Sort direction.",
+            "example": "ASC"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of campaign deliverables and viewer information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total_num": {
+                      "type": "integer",
+                      "description": "Total number of deliverables for the campaign.",
+                      "example": 150
+                    },
+                    "deliverables": {
+                      "type": "array",
+                      "description": "List of deliverables with viewer information.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "deliverableID": {
+                            "type": "string",
+                            "description": "The unique ID of the deliverable.",
+                            "example": "deliv_abc123def456"
+                          },
+                          "link": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "URL to the video.",
+                            "example": "https://mock.video.tailor.video/outputs/deliv_abc123def456.mp4"
+                          },
+                          "CreatedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Creation timestamp of the deliverable.",
+                            "example": "2023-10-27T10:00:00.000Z"
+                          },
+                          "viewerName": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Name of the viewer.",
+                            "example": "Jane Doe"
+                          },
+                          "viewerEmail": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Email of the viewer.",
+                            "example": "jane.doe@example.com"
+                          },
+                          "viewed": {
+                            "type": "integer",
+                            "description": "Whether the deliverable has been viewed (0 for false, 1 for true).",
+                            "example": 1
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Successful Response",
+                    "value": {
+                      "total_num": 85,
+                      "deliverables": [
+                        {
+                          "deliverableID": "deliv_mock1_aaa",
+                          "link": "https://mock.video.tailor.video/outputs/deliv_mock1_aaa.mp4",
+                          "CreatedAt": "2023-10-27T11:30:00.000Z",
+                          "viewerName": "Alice Wonderland",
+                          "viewerEmail": "alice@example.com",
+                          "viewed": 1
+                        },
+                        {
+                          "deliverableID": "deliv_mock2_bbb",
+                          "link": null,
+                          "CreatedAt": "2023-10-27T11:25:00.000Z",
+                          "viewerName": "Bob The Builder",
+                          "viewerEmail": "bob@example.com",
+                          "viewed": 0
+                        },
+                        {
+                          "deliverableID": "deliv_mock3_ccc",
+                          "link": "https://mock.video.tailor.video/outputs/deliv_mock3_ccc.mp4",
+                          "CreatedAt": "2023-10-27T11:20:00.000Z",
+                          "viewerName": null,
+                          "viewerEmail": "charlie@example.com",
+                          "viewed": 1
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Missing or invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                 "examples": {
+                  "InvalidSort": {
+                    "summary": "Invalid Sort Field",
+                    "value": {
+                      "message": "Invalid value for 'sortBy'. Allowed values are 'CreatedAt', 'viewerName'.",
+                       "request_id": "req_analytics_bad_sort"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Invalid or missing API key.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "Unauthorized": {
+                    "summary": "Missing API Key",
+                    "value": {
+                      "message": "API key is missing or invalid."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Campaign not found.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "NotFound": {
+                    "summary": "Campaign Not Found",
+                    "value": {
+                      "message": "Campaign with ID 'camp_analytics_nonexistent' not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "ServerError": {
+                    "summary": "Server Error",
+                    "value": {
+                      "message": "Failed to retrieve analytics data due to a server error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analytics/summary/{campaignId}": {
+      "get": {
+        "summary": "Get campaign analytics summary",
+        "operationId": "getCampaignAnalyticsSummary",
+        "tags": [
+          "Analytics"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "campaignId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique ID of the campaign to get analytics for.",
+            "example": "camp_summary_123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Campaign analytics summary data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "campaignId": {
+                      "type": "string",
+                      "description": "The unique ID of the campaign.",
+                      "example": "camp_summary_123"
+                    },
+                    "campaignName": {
+                      "type": "string",
+                      "description": "The name of the campaign.",
+                      "example": "Q4 Marketing Push"
+                    },
+                    "events": {
+                      "type": "object",
+                      "properties": {
+                        "totalPlays": {
+                          "type": "integer",
+                          "description": "Total number of video plays.",
+                          "example": 550
+                        },
+                        "viewProgress": {
+                          "type": "array",
+                          "description": "Breakdown of view progress at different percentage points.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "percentage": {
+                                "type": "integer",
+                                "description": "Percentage point of the video.",
+                                "example": 50
+                              },
+                              "count": {
+                                "type": "integer",
+                                "description": "Number of views that reached this percentage.",
+                                "example": 300
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "pageAnalytics": {
+                      "type": "object",
+                      "properties": {
+                        "views": {
+                          "type": "object",
+                          "properties": {
+                            "total": {
+                              "type": "integer",
+                              "description": "Total number of page views.",
+                              "example": 1200
+                            },
+                            "unique": {
+                              "type": "integer",
+                              "description": "Number of unique page views.",
+                              "example": 850
+                            }
+                          }
+                        },
+                        "viewsByPlatform": {
+                          "type": "object",
+                          "properties": {
+                            "desktop": {
+                              "type": "integer",
+                              "description": "Number of views from desktop devices.",
+                              "example": 700
+                            },
+                            "mobile": {
+                              "type": "integer",
+                              "description": "Number of views from mobile devices.",
+                              "example": 450
+                            },
+                            "tablet": {
+                              "type": "integer",
+                              "description": "Number of views from tablet devices.",
+                              "example": 50
+                            }
+                          }
+                        },
+                        "visitsByCountry": {
+                          "type": "array",
+                          "description": "Breakdown of visits by country.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "country": {
+                                "type": "string",
+                                "description": "Country name.",
+                                "example": "United States"
+                              },
+                              "countryCode": {
+                                "type": "string",
+                                "description": "ISO country code.",
+                                "example": "us"
+                              },
+                              "count": {
+                                "type": "integer",
+                                "description": "Number of visits from this country.",
+                                "example": 600
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Successful Response",
+                    "value": {
+                      "campaignId": "camp_summary_123",
+                      "campaignName": "Q4 Marketing Push",
+                      "events": {
+                        "totalPlays": 550,
+                        "viewProgress": [
+                          { "percentage": 10, "count": 500 },
+                          { "percentage": 20, "count": 480 },
+                          { "percentage": 30, "count": 450 },
+                          { "percentage": 40, "count": 400 },
+                          { "percentage": 50, "count": 300 },
+                          { "percentage": 60, "count": 250 },
+                          { "percentage": 70, "count": 200 },
+                          { "percentage": 80, "count": 150 },
+                          { "percentage": 90, "count": 100 },
+                          { "percentage": 100, "count": 80 }
+                        ]
+                      },
+                      "pageAnalytics": {
+                        "views": {
+                          "total": 1200,
+                          "unique": 850
+                        },
+                        "viewsByPlatform": {
+                          "desktop": 700,
+                          "mobile": 450,
+                          "tablet": 50
+                        },
+                        "visitsByCountry": [
+                          { "country": "United States", "countryCode": "us", "count": 600 },
+                          { "country": "Canada", "countryCode": "ca", "count": 150 },
+                          { "country": "United Kingdom", "countryCode": "gb", "count": 100 }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+             "description": "Unauthorized. Invalid or missing API key.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "Unauthorized": {
+                    "summary": "Missing API Key",
+                    "value": {
+                      "message": "API key is missing or invalid."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Campaign not found.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "NotFound": {
+                    "summary": "Campaign Not Found",
+                    "value": {
+                      "message": "Campaign with ID 'camp_summary_nonexistent' not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "ServerError": {
+                    "summary": "Server Error",
+                    "value": {
+                      "message": "Failed to retrieve analytics summary due to a server error."
                     }
                   }
                 }
@@ -397,7 +889,8 @@
             "schema": {
               "type": "string"
             },
-            "description": "The unique ID of the campaign."
+            "description": "The unique ID of the campaign.",
+            "example": "camp_fields_abc"
           }
         ],
         "responses": {
@@ -418,12 +911,12 @@
                       "fieldName": {
                         "type": "string",
                         "description": "The unique name identifier for the field.",
-                        "example": "PROPERTY_STAR_RATING"
+                        "example": "CUSTOMER_NAME"
                       },
                       "default": {
                         "type": "string",
                         "description": "The default value for the field.",
-                        "example": "3 Star"
+                        "example": "Valued Customer"
                       },
                       "source": {
                         "type": "string",
@@ -435,7 +928,7 @@
                         "type": "string",
                         "nullable": true,
                         "description": "The specific value or pattern for the field, potentially using variables.",
-                        "example": "{{PROSPECT_NAME_FIRST}}.wav"
+                        "example": "{{firstName}}.png"
                       }
                     },
                     "required": [
@@ -451,28 +944,28 @@
                     "value": [
                       {
                         "type": "text",
-                        "default": "3 Star",
-                        "fieldName": "PROPERTY_STAR_RATING"
+                        "default": "5 Stars",
+                        "fieldName": "HOTEL_RATING"
                       },
                       {
                         "type": "image",
                         "source": "url",
-                        "default": "https://lib.csgpmarketplace.com/cdn/web-analytics/v1/assets/salesdeck/logo/ups.com.png",
-                        "fieldName": "FORTUNE1K_LOGO_1"
+                        "default": "https://mock.example.com/logos/default.png",
+                        "fieldName": "COMPANY_LOGO"
                       },
                       {
                         "type": "audio",
-                        "value": "{{PROSPECT_NAME_FIRST}}.wav",
-                        "source": "assets/hi_names",
-                        "default": "HiThere.wav",
-                        "fieldName": "HI_NAME_AUDIO_CLIP"
+                        "value": "{{customerName}}.mp3",
+                        "source": "assets/greetings",
+                        "default": "default_greeting.mp3",
+                        "fieldName": "GREETING_AUDIO"
                       },
                       {
                         "type": "video",
-                        "value": "SCENE_11_{{PROPERTY_COUNTRY_CODE}}.mp4",
-                        "source": "scene-clips",
-                        "default": "SCENE_11_USA.mp4",
-                        "fieldName": "SCENE_11"
+                        "value": "intro_{{COUNTRY_CODE}}.mp4",
+                        "source": "clips/intros",
+                        "default": "intro_US.mp4",
+                        "fieldName": "INTRO_CLIP"
                       }
                     ]
                   }
@@ -484,7 +977,15 @@
             "description": "Unauthorized. Invalid or missing API key.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                 "examples": {
+                  "Unauthorized": {
+                    "summary": "Missing API Key",
+                    "value": {
+                      "message": "API key is missing or invalid."
+                    }
+                  }
+                }
               }
             }
           },
@@ -492,7 +993,15 @@
             "description": "Campaign not found.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "NotFound": {
+                    "summary": "Campaign Not Found",
+                    "value": {
+                      "message": "Campaign with ID 'camp_fields_nonexistent' not found."
+                    }
+                  }
+                }
               }
             }
           },
@@ -500,7 +1009,88 @@
             "description": "Internal server error.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "ServerError": {
+                    "summary": "Server Error",
+                    "value": {
+                      "message": "Failed to retrieve campaign fields due to a server error."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/credits": {
+      "get": {
+        "summary": "Get available credits",
+        "operationId": "getAvailableCredits",
+        "tags": [
+          "Credits"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current available credits for the authenticated user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "available_credits": {
+                      "type": "number",
+                      "description": "The number of credits currently available.",
+                      "example": 9966.22
+                    }
+                  }
+                },
+                "examples": {
+                  "Success": {
+                    "summary": "Successful Response",
+                    "value": {
+                      "available_credits": 9966.22
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Invalid or missing API key.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "Unauthorized": {
+                    "summary": "Missing API Key",
+                    "value": {
+                      "message": "API key is missing or invalid."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "ServerError": {
+                    "summary": "Server Error",
+                    "value": {
+                      "message": "Failed to retrieve credits due to a server error."
+                    }
+                  }
+                }
               }
             }
           }
@@ -532,58 +1122,58 @@
                       "campaignID": {
                         "type": "string",
                         "description": "The unique ID of the campaign.",
-                        "example": "0346d324-71d"
+                        "example": "camp_list_abc123"
                       },
                       "templateName": {
                         "type": "string",
                         "description": "The name of the template used by the campaign.",
-                        "example": "AI Business Builder - Logo Version"
+                        "example": "Standard Welcome Video"
                       },
                       "templateID": {
                         "type": "string",
                         "description": "The unique ID of the template.",
-                        "example": "643a3d34-9b8"
+                        "example": "tmpl_welc001"
                       },
                       "name": {
                         "type": "string",
                         "description": "The name of the campaign.",
-                        "example": "Maestro_AI_Business_Builder"
+                        "example": "New Customer Welcome Campaign"
                       },
                       "num_deliverables": {
                         "type": "integer",
                         "nullable": true,
                         "description": "The number of deliverables associated with the campaign.",
-                        "example": 980
+                        "example": 1250
                       },
                       "company": {
                         "type": "string",
                         "nullable": true,
                         "description": "The company associated with the campaign.",
-                        "example": "MTP"
+                        "example": "Example Corp"
                       },
                       "thumbnail": {
                         "type": "string",
                         "nullable": true,
                         "format": "uri",
                         "description": "URL of the campaign thumbnail.",
-                        "example": "https://video.tailor.video/07164e4b-d5b/ASSETS/Thumbnail/07164e4b-d5b"
+                        "example": "https://mock.video.tailor.video/thumbnails/camp_list_abc123.jpg"
                       },
                       "workspaceID": {
                         "type": "string",
                         "nullable": true,
                         "description": "The ID of the workspace the campaign belongs to.",
-                        "example": null
+                        "example": "ws_marketing_01"
                       },
                       "workspaceName": {
                         "type": "string",
                         "nullable": true,
                         "description": "The name of the workspace the campaign belongs to.",
-                        "example": null
+                        "example": "Marketing Team"
                       },
                       "createEnabled": {
                         "type": "integer",
                         "description": "Indicates if creation is enabled (0 for false, 1 for true).",
-                        "example": 0
+                        "example": 1
                       }
                     }
                   }
@@ -593,27 +1183,27 @@
                     "summary": "Successful Response",
                     "value": [
                       {
-                        "campaignID": "0346d324-71d",
-                        "templateName": "AI Business Builder - Logo Version",
-                        "templateID": "643a3d34-9b8",
-                        "name": "Maestro_AI_Business_Builder",
-                        "num_deliverables": null,
-                        "company": "MTP",
-                        "thumbnail": null,
-                        "workspaceID": null,
-                        "workspaceName": null,
-                        "createEnabled": 0
+                        "campaignID": "camp_list_abc123",
+                        "templateName": "Standard Welcome Video",
+                        "templateID": "tmpl_welc001",
+                        "name": "New Customer Welcome Campaign",
+                        "num_deliverables": 1250,
+                        "company": "Example Corp",
+                        "thumbnail": "https://mock.video.tailor.video/thumbnails/camp_list_abc123.jpg",
+                        "workspaceID": "ws_marketing_01",
+                        "workspaceName": "Marketing Team",
+                        "createEnabled": 1
                       },
                       {
-                        "campaignID": "07164e4b-d5b",
-                        "templateName": "pulse-card",
-                        "templateID": "0ddcbf1c-475",
-                        "name": "Demo Campaign",
-                        "num_deliverables": 980,
-                        "company": null,
-                        "thumbnail": "https://video.tailor.video/07164e4b-d5b/ASSETS/Thumbnail/07164e4b-d5b",
-                        "workspaceID": null,
-                        "workspaceName": null,
+                        "campaignID": "camp_list_def456",
+                        "templateName": "Product Demo Template",
+                        "templateID": "tmpl_demo002",
+                        "name": "Product Launch Demo",
+                        "num_deliverables": 50,
+                        "company": "Example Corp",
+                        "thumbnail": "https://mock.video.tailor.video/thumbnails/camp_list_def456.jpg",
+                        "workspaceID": "ws_sales_02",
+                        "workspaceName": "Sales Team",
                         "createEnabled": 0
                       }
                     ]
@@ -631,7 +1221,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Unauthorized"
+                      "example": "Unauthorized - Invalid API Key provided."
                     }
                   }
                 }
@@ -647,7 +1237,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "An error occurred while retrieving campaigns"
+                      "example": "An internal error occurred while fetching the campaign list."
                     }
                   }
                 }
@@ -664,7 +1254,7 @@
         "type": "apiKey",
         "in": "header",
         "name": "Authorization",
-        "description": "API key required in the Authorization header. Example: 'Authorization: {api key}'"
+        "description": "API key required in the Authorization header. Example: 'Authorization: YOUR_API_KEY'"
       }
     },
     "schemas": {
@@ -673,12 +1263,14 @@
         "properties": {
           "message": {
             "type": "string",
-            "description": "A human-readable error message."
+            "description": "A human-readable error message.",
+            "example": "Resource not found."
           },
           "request_id": {
             "type": "string",
             "description": "A unique identifier for the request, useful for debugging.",
-            "nullable": true
+            "nullable": true,
+            "example": "req_error_mock_id"
           }
         },
         "required": [
